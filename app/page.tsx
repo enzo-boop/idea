@@ -53,12 +53,12 @@ export default function Home() {
           coordinazione, aumentando la vitalit&agrave; e l&apos;energia.
         </p>
       </div>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h3>
           <i className="fa fa-calendar mr-1"></i>
           Appuntamenti
         </h3>
-      </div>
+      </div> */}
     </div>
   );
 }
