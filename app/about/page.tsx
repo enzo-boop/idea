@@ -18,9 +18,10 @@ export default function About() {
           permesso di riconnettermi al mio corpo in modo autentico, libero da
           schemi predefiniti e rigidezze tecniche. Oggi, offro sessioni private
           e appuntamenti individuali, in cui accompagno chi desidera esplorare
-          questa pratica in modo profondo e personalizzato. <br />
+          questa pratica in modo profondo e personalizzato.
+          <br />
           Qui non ci sono forzature, solo uno spazio sicuro in cui il movimento
-          nasce dall'ascolto interiore e dalla consapevolezza del corpo. Se
+          nasce dall&apos;ascolto interiore e dalla consapevolezza del corpo. Se
           anche tu senti il bisogno di riconnetterti con il tuo corpo e di
           scoprire la danza come strumento di crescita e trasformazione, ti
           invito a intraprendere questo viaggio insieme a me.
