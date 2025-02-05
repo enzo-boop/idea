@@ -11,6 +11,7 @@ export default function Home() {
           consapevole. Qui troverai articoli, esperienze e pratiche per
           riconnetterti con il tuo corpo e la tua espressivit&agrave;.
         </p>
+        <img src="/img-1.jpg"></img>
       </div>
       <div className="mt-4">
         <h3>
@@ -25,6 +26,7 @@ export default function Home() {
           stimola la percezione, promuove il benessere e aiuta a liberarsi dalle
           rigidit&agrave; fisiche ed emotive.
         </p>
+        <img src="/img-2.jpg"></img>
       </div>
       <div className="mt-4">
         <h3>
@@ -38,6 +40,7 @@ export default function Home() {
           somatica &egrave; la pratica che fa per te. Prenota una sessione e
           inizia il tuo viaggio nel corpo consapevole.
         </p>
+        <img src="/img-3.jpg"></img>
       </div>
       <div className="mt-4">
         <h3>
@@ -52,6 +55,7 @@ export default function Home() {
           Benessere generale: Migliora la postura, l&apos;equilibrio e la
           coordinazione, aumentando la vitalit&agrave; e l&apos;energia.
         </p>
+        <img src="/img-4.jpg"></img>
       </div>
       {/* <div className="mt-4">
         <h3>
