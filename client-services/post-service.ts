@@ -1,4 +1,4 @@
-import { HttpResponse, Post } from "@/app/globals/models/models";
+import { Post } from "@/app/globals/models/models";
 
 const endPoint: string = "http://localhost:3000/api/post";
 
