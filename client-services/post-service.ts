@@ -1,6 +1,7 @@
+const dotenv = require("dotenv");
 import { Post } from "@/app/globals/models/models";
-
-const endPoint: string = "http://localhost:3000/api/post";
+dotenv.config();
+const endPoint: string = process.env.BASE_URL + "post";
 
 export function getPosts(): Promise<Array<Post>> {
   return new Promise<Array<Post>>((resolve, reject) => {
