@@ -15,10 +15,7 @@ export default function Home() {
       {posts?.map((res, index) => (
         <div key={index} className="mt-4">
           <div className="post">
-            <h3>
-              <i className="fa fa-diamond mr-1"></i>
-              {res.author}
-            </h3>
+            <h3>{res.author}</h3>
             <img src={res.image_url} alt="post" />
             <p>{res?.text}</p>
             <p className="creation_date mb-0">Data creazione</p>
