@@ -1,0 +1,63 @@
+import { HttpResponse, Post } from "@/app/globals/models/models";
+
+const endPoint: string = "http://localhost:3000/api/post";
+
+export function getPosts(): Promise<Array<Post>> {
+  return new Promise<Array<Post>>((resolve, reject) => {
+    fetch(endPoint, { method: "GET" })
+      .then((response) => response.json())
+      .then((result: Array<Post>) => resolve(result))
+      .catch(() => reject("Errore nel recupero dei dati"));
+  });
+}
+
+export function postPost(body: Post): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
+    fetch(endPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((result: number) => resolve(result))
+      .catch(() => reject("Errore nella creazione del post"));
+  });
+}
+
+export function deletePost(postId: number): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    fetch(`${endPoint}/${postId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve();
+        } else {
+          reject("Errore nella cancellazione del post");
+        }
+      })
+      .catch(() => reject("Errore nella cancellazione del post"));
+  });
+}
+
+export function updatePost(postId: number, body: Post): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    fetch(`${endPoint}/${postId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        if (response.ok) {
+          resolve();
+        } else {
+          reject("Errore nell'aggiornamento del post");
+        }
+      })
+      .catch(() => reject("Errore nell'aggiornamento del post"));
+  });
+}

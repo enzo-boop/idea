@@ -1,7 +1,34 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Post } from "./globals/models/models";
+import { getPosts, postPost } from "@/client-services/post-service";
+
 export default function Home() {
+  const [posts, setPosts] = useState<Array<Post> | null>(null);
+
+  useEffect(() => {
+    getPosts().then((posts) => setPosts(posts));
+  }, []);
+
   return (
     <div className="prose dark:prose-invert">
-      <div className="mt-4">
+      {posts?.map((res, index) => (
+        <div className="mt-4">
+          <div key={index} className="post">
+            <h3>
+              <i className="fa fa-diamond mr-1"></i>
+              {res.author}
+            </h3>
+            <img src={res.image_url} alt="post" />
+            <p>{res?.text}</p>
+            <p className="creation_date mb-0">Data creazione</p>
+            <p className="align-text-end">
+              {new Date(res?.created_at ?? "").toDateString()}
+            </p>
+          </div>
+        </div>
+      ))}
+      {/* <div className="mt-4">
         <h3>
           <i className="fa fa-diamond mr-1"></i>
           Esplora il Movimento, Risveglia la Consapevolezza
@@ -56,7 +83,7 @@ export default function Home() {
           coordinazione, aumentando la vitalit&agrave; e l&apos;energia.
         </p>
         <img src="/img-4.jpg"></img>
-      </div>
+      </div> */}
       {/* <div className="mt-4">
         <h3>
           <i className="fa fa-calendar mr-1"></i>
