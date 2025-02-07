@@ -22,9 +22,9 @@ export default function Home() {
             <img src={res.image_url} alt="post" />
             <p>{res?.text}</p>
             <p className="creation_date mb-0">Data creazione</p>
-            <p className="align-text-end">
+            <span className="display-date">
               {new Date(res?.created_at ?? "").toDateString()}
-            </p>
+            </span>
           </div>
         </div>
       ))}

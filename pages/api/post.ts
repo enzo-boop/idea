@@ -1,6 +1,9 @@
 import { Post } from "@/app/globals/models/models";
 import { neon } from "@neondatabase/serverless";
 import dotenv from "dotenv";
+import path from "path";
+import fs from "fs";
+import buffer from "buffer";
 import { NextApiRequest, NextApiResponse } from "next";
 
 dotenv.config();
@@ -17,6 +20,7 @@ export default async function handler(
         const posts = await sql`SELECT * FROM posts ORDER BY created_at DESC;`;
         res.status(200).json(posts);
       } catch (error) {
+        console.error(error)
         res.status(500).json({ error: "Errore nel recupero dei post" });
       }
       break;
@@ -28,10 +32,14 @@ export default async function handler(
             .status(400)
             .json({ error: "L'autore è obbligatorio" });
         }
+        const buffer = Buffer.from(body.image_url!, 'base64'); 
+        const fileName = `image-${Date.now()}.jpg`;
+        const filePath = path.join(process.cwd(), 'public', fileName);
+        fs.writeFileSync(filePath, <unknown>buffer as string); 
         body.created_at = new Date();
         const idPost = await sql`
         INSERT INTO posts (author, text, image_url, created_at)
-        VALUES (${body.author}, ${body.text ?? null}, ${body.image_url ?? null}, ${body.created_at ?? sql`CURRENT_TIMESTAMP`})
+        VALUES (${body.author}, ${body.text ?? null}, ${fileName ?? null}, ${body.created_at ?? sql`CURRENT_TIMESTAMP`})
         RETURNING ID;
       `;
         res.status(201).json({ id: idPost[0].id });

@@ -2,25 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-.mr-1{
-    margin-right: 3px;
+.mr-1 {
+  margin-right: 3px;
 }
 
-.mt-4{
-    margin-top:12px;
+.mt-4 {
+  margin-top: 12px;
 }
 
-.creation_date{
-    font-style: italic;
-    font-weight: 600;
-    text-align:end;
-    margin-bottom:0!important;
+.creation_date {
+  font-style: italic;
+  font-weight: 600;
+  text-align: end;
+  margin-bottom: 0 !important;
 }
 
-.align-text-end{
-    text-align: end;
+.display-date {
+  text-align: end;
+  display: block;
 }
 
-.mb-0{
-    margin-bottom:0!important;
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+/* Stile di base per il campo di testo in entrambe le modalità */
+.MuiFilledInput-root {
+  text-shadow: 0 1px 1px black;
+  background-color: #0000000f;
+  color: #e0e0e0; /* Testo chiaro */
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Colore del bordo */
+.MuiFilledInput-notchedOutline {
+  border-color: #757575; /* Bordo grigio medio */
+}
+
+/* Colore del testo all'interno del campo di testo */
+.MuiInputLabel-root {
+  text-shadow: 0 0px 3px black;
+  color: #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Modifica del bordo al focus */
+.MuiFilledInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #ffffff; /* Colore del bordo quando il campo è selezionato */
+}
+
+/* Colore del testo durante il focus */
+.MuiFilledInput-root.Mui-focused {
+  color: #ffffff; /* Testo bianco quando il campo è selezionato */
 }

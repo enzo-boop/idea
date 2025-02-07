@@ -1,8 +1,8 @@
 const dotenv = require("dotenv");
 import { Post } from "@/app/globals/models/models";
 dotenv.config();
-const endPoint: string = process.env.BASE_URL + "post";
-
+const endPoint: string = process.env.BASE_URL + "api/post";
+console.log(endPoint);
 export function getPosts(): Promise<Array<Post>> {
   return new Promise<Array<Post>>((resolve, reject) => {
     fetch(endPoint, { method: "GET" })

@@ -18,19 +18,25 @@ export default function Post() {
   const [image, setImage] = useState<File | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setImage(event.target.files[0]);
-    }
+    if (event.target.files) setImage(event.target.files[0]);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const body: PostModel = {
-      author: title,
-      text: text,
-      image_url: "img-4.jpg",
-    } as PostModel;
-    postPost(body).then(() => (location.href = "/"));
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64File = reader.result?.toString().split(",")[1];
+        const body: PostModel = {
+          author: title,
+          text: text,
+          image_url: base64File,
+        } as PostModel;
+        console.log(body);
+        postPost(body).then(() => (location.href = "/"));
+      };
+      reader.readAsDataURL(image)
+    }
   };
 
   return (
@@ -76,7 +82,6 @@ export default function Post() {
             variant="filled"
             fullWidth
             margin="normal"
-            className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -88,18 +93,21 @@ export default function Post() {
             rows={4}
             fullWidth
             margin="normal"
-            className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
           <Container
-            sx={{ display: "flex", justifyContent: "end", padding: "0!important" }}
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              padding: "0!important",
+            }}
           >
             <Button
               variant="contained"
               color="success"
               component="label"
-              onClick={(e)=>handleSubmit(e)}
+              onClick={(e) => handleSubmit(e)}
               startIcon={<Save />}
             >
               Salva
