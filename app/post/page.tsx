@@ -8,7 +8,7 @@ import {
   Container,
   Avatar,
 } from "@mui/material";
-import { PhotoCamera, Save } from "@mui/icons-material";
+import { PhotoCamera, Save, Article  } from "@mui/icons-material";
 import { postPost } from "@/client-services/post-service";
 import { Post as PostModel } from "../globals/models/models";
 
@@ -52,8 +52,11 @@ export default function Post() {
           padding: "20px",
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Crea un post
+        <Typography variant="h5" 
+        gutterBottom 
+        sx={{marginTop:"20px",marginBottom:"20px",display:"flex",alignItems:"center"}}>
+          <Article/>
+          Nuovo post
         </Typography>
         {
           <Avatar

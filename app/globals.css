@@ -18,6 +18,7 @@
 }
 
 .display-date {
+  font-style: italic;
   text-align: end;
   display: block;
 }
@@ -32,16 +33,21 @@
   border-radius: 8px;
 }
 
-.dark .MuiOutlinedInput-root {
+.dark .MuiFilledInput-root {
   border-color: #90caf9 !important;
 }
 
-.dark .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+.dark .MuiFilledInput-root:hover .MuiFilledInput-notchedOutline {
   border-color: #bbdefb !important;
 }
 
 .dark .MuiInputLabel-root {
-  color: #90caf9 !important;
+  color: #ffffff !important;
+}
+
+/* Fix per il colore del testo nei campi di input */
+.dark .MuiFilledInput-input {
+  color: #ffffff !important;
 }
 
 .dark .MuiButton-root {
