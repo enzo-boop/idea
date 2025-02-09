@@ -8,6 +8,16 @@ const nextConfig = {
   },
   reactStrictMode: false,
   swcMinify: true,
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
+  webpack(config, { isServer }) {
+    // Aggiungi la configurazione della cache all'interno di Webpack
+    config.cache = {
+      type: "memory", // Usa la cache in memoria
+    };
+  return config;
+  },
 };
 
 module.exports = withContentlayer(nextConfig);

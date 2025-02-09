@@ -1,27 +1,30 @@
-import Link from "next/link"
-import "./globals.css"
-import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Analytics } from "@/components/analytics"
-import { ModeToggle } from "@/components/mode-toggle"
+import Link from "next/link";
+import "./globals.css";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@/components/analytics";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Home, InfoSharp, Key, Light } from "@mui/icons-material";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Somatic movement",
-  description: "Personal blog about somatic movement topic",
-}
+  title: "Idéa",
+  description: "Personal space",
+};
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      </link>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        ></link>
       </head>
       <body
         className={`antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 ${inter.className}`}
@@ -32,12 +35,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <div className="flex items-center justify-between">
                 <ModeToggle />
                 <h1 className="font-medium ml-auto">
-                  <i className="fa fa-star mr-1"></i>
-                  Somatic Movement</h1>
+                  Idéa
+                </h1>
                 <nav className="ml-auto text-sm font-medium space-x-6">
-                  <Link href="/">Home</Link>
-                  <Link href="/about">About</Link>
-                  <Link href="/sign-in">Accedi</Link>
+                  <Link href="/">
+                  Home
+                    <Home />
+                  </Link>
+                  <Link href="/about">
+                  About
+                    <InfoSharp />
+                  </Link>
+                  <Link href="/sign-in">
+                    <Key />
+                  </Link>
                 </nav>
               </div>
             </header>
@@ -47,5 +58,5 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

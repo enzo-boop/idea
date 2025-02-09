@@ -8,9 +8,10 @@ import {
   Container,
   Avatar,
 } from "@mui/material";
-import { PhotoCamera, Save, Article  } from "@mui/icons-material";
+import { PhotoCamera, Save, Article } from "@mui/icons-material";
 import { postPost } from "@/client-services/post-service";
 import { Post as PostModel } from "../globals/models/models";
+import { upload } from "@/client-services/common";
 
 export default function Post() {
   const [title, setTitle] = useState("");
@@ -21,21 +22,16 @@ export default function Post() {
     if (event.target.files) setImage(event.target.files[0]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64File = reader.result?.toString().split(",")[1];
-        const body: PostModel = {
-          author: title,
-          text: text,
-          image_url: base64File,
-        } as PostModel;
-        console.log(body);
-        postPost(body).then(() => (location.href = "/"));
-      };
-      reader.readAsDataURL(image)
+      const image_url = await upload(image);
+      const body: PostModel = {
+        author: title,
+        text: text,
+        image_url: image_url,
+      } as PostModel;
+      postPost(body).then(() => (location.href = "/"));
     }
   };
 
@@ -52,10 +48,17 @@ export default function Post() {
           padding: "20px",
         }}
       >
-        <Typography variant="h5" 
-        gutterBottom 
-        sx={{marginTop:"20px",marginBottom:"20px",display:"flex",alignItems:"center"}}>
-          <Article/>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Article />
           Nuovo post
         </Typography>
         {
