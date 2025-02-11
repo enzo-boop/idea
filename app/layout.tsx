@@ -40,19 +40,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <nav className="ml-auto text-sm font-medium space-x-6">
                   <Link href="/">
                   Home
-                    <Home />
                   </Link>
                   <Link href="/about">
                   About
-                    <InfoSharp />
                   </Link>
                   <Link href="/sign-in">
-                    <Key />
+                  Accedi
                   </Link>
                 </nav>
               </div>
             </header>
-            <main>{children}</main>
+            <main className="mt-4">{children}</main>
           </div>
           <Analytics />
         </ThemeProvider>
