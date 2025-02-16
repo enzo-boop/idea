@@ -22,9 +22,7 @@ export default function Post() {
   const [image, setImage] = useState<File | string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { settings, setSettings } = GetToastContext();
-  const urlWithParams:string = document.location.search;
-  const params: URLSearchParams = new URLSearchParams(urlWithParams);
-  const id = params.get("id");
+  let id: string | null = null;
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) setImage(event.target.files[0]);
   };
@@ -43,8 +41,8 @@ export default function Post() {
       let promise: Promise<void | string> | null = null;
       if (id) promise = updatePost(id, body);
       else {
-        (body.userId = "516d9b74-eb15-44c4-b71b-2f45e16b02e7");
-          (promise = postPost(body));
+        body.userId = "516d9b74-eb15-44c4-b71b-2f45e16b02e7";
+        promise = postPost(body);
       }
       promise
         .catch((err: Error) => {
@@ -63,6 +61,9 @@ export default function Post() {
   };
 
   useEffect(() => {
+    const urlWithParams: string = location.search;
+    const params: URLSearchParams = new URLSearchParams(urlWithParams);
+    id = params.get("id");
     if (id) {
       getPost(id).then((response) => {
         setImage(response.imageUrl!);
