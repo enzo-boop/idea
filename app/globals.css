@@ -83,6 +83,15 @@ flex-direction:column;
   background-color: #040d34 !important;
 }
 
+.dark .MuiMenuItem-root {
+  background-color: #020617 !important;
+  color: #fff !important;
+}
+
+.dark .MuiMenuItem-root:hover {
+  background-color: #040d34 !important;
+}
+
 .MuiCard-root {
   background-color: transparent !important;
 }
@@ -102,6 +111,6 @@ flex-direction:column;
 
 .spinner{
 position: fixed;
-bottom: 50vh;
-left:50vw
+bottom:calc(50vh - 25px);
+left:calc(50vw - 25px);
 }

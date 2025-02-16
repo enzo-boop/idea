@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { Post } from "./globals/models/models";
-import { getPosts } from "@/client-services/post-service";
+import { deletePost, getPosts } from "@/client-services/post-service";
 import {
   Avatar,
   Card,
@@ -13,18 +13,38 @@ import {
   IconButton,
   Typography,
   CircularProgress,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import { Favorite, MoreVertSharp, Share } from "@mui/icons-material";
+import { Delete, Edit, Favorite, MoreVertSharp, Share } from "@mui/icons-material";
+import ConfirmationDialog from "@/components/dialog.component";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [anchorEl, setAnchorEl] = useState<Element|null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);  
+  
+  const open = Boolean(anchorEl);
+  let triggeredId: string|null= null;
+  
+  const handleClick = (event: MouseEvent<MouseEvent|HTMLButtonElement>) => setAnchorEl(event.currentTarget as Element);
+  const handleClose = () => setAnchorEl(null);
+  const handleDelete = async (id:string) => await deletePost(id);
+  const dialogTriggered =  (id:string) => {
+    triggeredId = id;
+    setDialogOpen(true)};
+  const close =  (value:boolean) =>{
+    if(value && triggeredId) handleDelete(triggeredId);
+    triggeredId = null;
+    setDialogOpen(false);
+    };
 
   useEffect(() => {
     getPosts()
       .then((res: Post[]) => setPosts(res))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [handleDelete]);
 
   return (
     <div className="posts-wrapper place-self-center">
@@ -45,14 +65,26 @@ export default function Home() {
             <CardHeader
               avatar={<Avatar />}
               action={
-                <IconButton aria-label="settings">
-                  <MoreVertSharp />
-                </IconButton>
+                <div>
+                  <IconButton aria-label="settings" onClick={(e)=>handleClick(e)}>
+                    <MoreVertSharp />
+                  </IconButton>
+                  <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                    <MenuItem onClick={()=>handleDelete(res.id!)}>
+                      <Edit fontSize="small" style={{ marginRight: 8 }} />
+                      Modifica
+                    </MenuItem>
+                    <MenuItem onClick={()=>dialogTriggered(res.id!)}>
+                      <Delete fontSize="small" style={{ marginRight: 8 }} />
+                      Elimina
+                    </MenuItem>
+                  </Menu>
+                </div>
               }
-              title={res.author}
+              title={res.title}
               subheader={
-                res.created_at
-                  ? new Date(res.created_at).toLocaleDateString()
+                res.createdAt
+                  ? new Date(res.createdAt).toLocaleDateString()
                   : ""
               }
               classes={{
@@ -60,10 +92,10 @@ export default function Home() {
                 subheader: "dark:text-slate-500",
               }}
             />
-            <CardMedia component="img" height="194" image={res.image_url} />
+            <CardMedia component="img" height="194" image={res.imageUrl} />
             <CardContent>
               <Typography variant="body2" className="prose dark:prose-invert">
-                {res.text}
+                {res.content}
               </Typography>
             </CardContent>
             <CardActions disableSpacing className="justify-end">
@@ -77,6 +109,12 @@ export default function Home() {
           </Card>
         ))
       )}
+       <ConfirmationDialog
+        open={dialogOpen}
+        close={close}
+        title="Conferma eliminazione"
+        text="Sei sicuro di voler eliminare questo post?"
+      />
     </div>
   );
 }

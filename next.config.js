@@ -7,7 +7,7 @@ const nextConfig = {
     BASE_URL: process.env.BASE_URL,
   },
   reactStrictMode: false,
-  swcMinify: true,
+  swcMinify: false,
   images: {
     domains: ["res.cloudinary.com"],
   },

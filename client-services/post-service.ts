@@ -28,9 +28,9 @@ export function postPost(body: Post): Promise<number> {
   });
 }
 
-export function deletePost(postId: number): Promise<void> {
+export function deletePost(postId: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    fetch(`${endPoint}/${postId}`, {
+    fetch(`${endPoint}?id=${encodeURIComponent(postId)}`, {
       method: "DELETE",
     })
       .then((response) => {

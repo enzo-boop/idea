@@ -1,6 +1,9 @@
 export interface Post {
-author:string;
-text?:string;
-image_url?:string;
-created_at?:Date;
+userId:string;
+title?:string;
+content?:string;
+imageUrl?:string;
+createdAt?:Date;
+id?:string;
+published?:boolean;
 }

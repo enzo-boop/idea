@@ -1,21 +1,30 @@
-const { neon } = require("@neondatabase/serverless");
-const dotenv = require("dotenv");
-dotenv.config();
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcryptjs");
 
-async function seed() {
-  const sql = neon(process.env.DATABASE_URL!);
+const prisma = new PrismaClient();
 
-  await sql`
-        CREATE TABLE IF NOT EXISTS posts (
-            id SERIAL PRIMARY KEY,
-            author VARCHAR(255) NOT NULL,
-            text TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            image_url VARCHAR(255)
-        );
-    `;
+async function main() {
+  console.log("Seeding database...");
+  let pass: string = await bcrypt.hash("Ciao123!", 10);
+  const user = await prisma.user.upsert({
+    where: { email: "admin@idea.com" },
+    update: {},
+    create: {
+      email: "admin@idea.com",
+      name: "admin",
+      password: pass,
+      createdAt: new Date(),
+    },
+  });
 
-  console.log("[LOG]:Seeding completato con successo!");
+  console.log("Database seeded!", user);
 }
 
-seed().catch(console.error);
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

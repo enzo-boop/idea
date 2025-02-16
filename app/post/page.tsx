@@ -27,9 +27,11 @@ export default function Post() {
     if (image) {
       const image_url = await upload(image);
       const body: PostModel = {
-        author: title,
-        text: text,
-        image_url: image_url,
+        userId: "516d9b74-eb15-44c4-b71b-2f45e16b02e7",
+        title: title,
+        content: text,
+        imageUrl: image_url,
+        published:true,
       } as PostModel;
       postPost(body).then(() => (location.href = "/"));
     }
