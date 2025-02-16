@@ -1,10 +1,17 @@
+"use client";
 import Link from "next/link";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Home, InfoSharp, Key, Light, Lightbulb } from "@mui/icons-material";
-
+import {
+  Add,
+  Lightbulb,
+} from "@mui/icons-material";
+import { GetToastContext, ToastProvider } from "./contexts/toast.context";
+import { useEffect } from "react";
+import { IconButton, Snackbar } from "@mui/material";
+import IdeaSnackbar from "@/components/snackbar.component";
 
 export const metadata = {
   title: "Idéa",
@@ -27,32 +34,30 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-2xl mx-auto py-10 px-4">
-            <header>
-              <div className="flex items-center justify-between">
-                <ModeToggle />
-                <h1 className="font-medium ml-auto">
-                  <Lightbulb/>
-                  Idéa
-                </h1>
-                <nav className="ml-auto text-sm font-medium space-x-6">
-                  <Link href="/">
-                  Home
-                  </Link>
-                  <Link href="/about">
-                  About
-                  </Link>
-                  <Link href="/sign-in">
-                  Accedi
-                  </Link>
-                </nav>
-              </div>
-            </header>
-            <main>{children}</main>
-          </div>
-          <Analytics />
-        </ThemeProvider>
+        <ToastProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="max-w-2xl mx-auto py-10 px-4">
+              <header>
+                <div className="flex items-center justify-between">
+                  <ModeToggle />
+                  <h1 className="font-medium ml-auto">
+                    <Lightbulb />
+                    Idéa
+                  </h1>
+                  <nav className="ml-auto text-sm font-medium space-x-6">
+                    <Link href="/">Home</Link>
+                    <Link href="/about">About</Link>
+                    <Link href="/sign-in">Accedi</Link>
+                    <Link href="/post"><Add/></Link>
+                  </nav>
+                </div>
+              </header>
+              <main>{children}</main>
+            </div>
+            <IdeaSnackbar />
+            <Analytics />
+          </ThemeProvider>
+        </ToastProvider>
       </body>
     </html>
   );

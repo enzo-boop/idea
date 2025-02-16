@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { get, post, put, remove } from "@/server-services/post.service";
+import { get, getAll, post, put, remove } from "@/server-services/post.service";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,7 +7,9 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      await get(req, res);
+      const id: string | undefined = req.query["id"] as string | undefined;
+      if (id) await get(id, res);
+      else await getAll(req, res);
       break;
 
     case "POST":

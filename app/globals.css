@@ -92,12 +92,21 @@ flex-direction:column;
   background-color: #040d34 !important;
 }
 
-.dark .MuiMenuItem-root {
+.dark .MuiList-root {
   background-color: #020617 !important;
   color: #fff !important;
 }
 
-.dark .MuiMenuItem-root:hover {
+.dark .MuiList-root:hover {
+  background-color: #040d34 !important;
+}
+
+.dark .MuiDialog-root {
+  background-color: #020617 !important;
+  color: #fff !important;
+}
+
+.dark .MuiDialog-root:hover {
   background-color: #040d34 !important;
 }
 

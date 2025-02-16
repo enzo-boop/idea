@@ -13,8 +13,17 @@ export function getPosts(): Promise<Array<Post>> {
   });
 }
 
-export function postPost(body: Post): Promise<number> {
-  return new Promise<number>((resolve, reject) => {
+export function getPost(id: string): Promise<Post> {
+  return new Promise<Post>((resolve, reject) => {
+    fetch(endPoint + "?id=" + id, { method: "GET" })
+      .then((response) => response.json())
+      .then((result: Post) => resolve(result))
+      .catch(() => reject("Errore nel recupero dei dati"));
+  });
+}
+
+export function postPost(body: Post): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
     fetch(endPoint, {
       method: "POST",
       headers: {
@@ -23,7 +32,7 @@ export function postPost(body: Post): Promise<number> {
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
-      .then((result: number) => resolve(result))
+      .then((result: string) => resolve(result))
       .catch(() => reject("Errore nella creazione del post"));
   });
 }
@@ -44,9 +53,9 @@ export function deletePost(postId: string): Promise<void> {
   });
 }
 
-export function updatePost(postId: number, body: Post): Promise<void> {
+export function updatePost(postId: string, body: Post): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    fetch(`${endPoint}/${postId}`, {
+    fetch(`${endPoint}?id=${postId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -24,38 +24,44 @@ import {
   Share,
 } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
+import { GetToastContext } from "./contexts/toast.context";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-
+  const [triggeredId, setTriggeredId] = useState<string | null>(null);
+  const { settings, setSettings } = GetToastContext();
   const open = Boolean(anchorEl);
-  let triggeredId: string | null = null;
-
-  const get = () => getPosts()
+  const get = () =>
+    getPosts()
       .then((res: Post[]) => setPosts(res))
       .finally(() => setIsLoading(false));
-  
-      const handleClick = (event: MouseEvent<MouseEvent | HTMLButtonElement>) =>
+
+  const handleClick = (event: MouseEvent<MouseEvent | HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget as Element);
-  
+
   const handleClose = () => setAnchorEl(null);
-  
-  const handleDelete = async (id: string) => await deletePost(id);
-  
+
+  const handleDelete = async (id: string) =>
+    deletePost(id).then(() => {
+      setSettings({
+        message: "Post eliminato correttamente!",
+        autoHideDuration: 3000,
+        open: true,
+      });
+      get();
+    });
+
   const dialogTriggered = (id: string) => {
-    triggeredId = id;
+    setTriggeredId(id);
     setDialogOpen(true);
   };
 
   const close = (value: boolean) => {
-    if (value && triggeredId) {
-      handleDelete(triggeredId);
-      get();
-    };
-    triggeredId = null;
+    if (value && triggeredId) handleDelete(triggeredId);
+    setTriggeredId(null);
     setDialogOpen(false);
   };
 
@@ -90,7 +96,9 @@ export default function Home() {
                     <MoreVertSharp />
                   </IconButton>
                   <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <MenuItem onClick={() => handleDelete(res.id!)}>
+                    <MenuItem
+                      onClick={() => (location.href = "/post?id=" + res.id)}
+                    >
                       <Edit fontSize="small" style={{ marginRight: 8 }} />
                       Modifica
                     </MenuItem>

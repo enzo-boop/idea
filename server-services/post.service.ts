@@ -2,6 +2,23 @@ import { Post, PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export async function get(
+  id:string,
+  res: NextApiResponse,
+): Promise<void> {
+  const prisma = new PrismaClient();
+  try {
+    const post = await prisma.post.findUnique({
+      where:{
+        id : id
+      }
+    });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Errore nel recupero del post" });
+  }
+}
+
+export async function getAll(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
@@ -62,10 +79,7 @@ export async function put(
       return res.status(400).json({ error: "ID del post è obbligatorio" });
     }
 
-    const body: Post = JSON.parse(req.body);
-    if (!body.userId) {
-      return res.status(400).json({ error: "L'autore è obbligatorio" });
-    }
+    const body: Post = req.body;
 
     const updatedPost = await prisma.post.update({
       where: {
@@ -80,6 +94,7 @@ export async function put(
 
     res.status(200).json(updatedPost);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Errore nell'aggiornamento del post" });
   }
 }
