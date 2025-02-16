@@ -13,11 +13,6 @@ import { useEffect } from "react";
 import { IconButton, Snackbar } from "@mui/material";
 import IdeaSnackbar from "@/components/snackbar.component";
 
-export const metadata = {
-  title: "Idéa",
-  description: "Personal space",
-};
-
 interface RootLayoutProps {
   children: React.ReactNode;
 }
