@@ -16,35 +16,52 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { Delete, Edit, Favorite, MoreVertSharp, Share } from "@mui/icons-material";
+import {
+  Delete,
+  Edit,
+  Favorite,
+  MoreVertSharp,
+  Share,
+} from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [anchorEl, setAnchorEl] = useState<Element|null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);  
-  
-  const open = Boolean(anchorEl);
-  let triggeredId: string|null= null;
-  
-  const handleClick = (event: MouseEvent<MouseEvent|HTMLButtonElement>) => setAnchorEl(event.currentTarget as Element);
-  const handleClose = () => setAnchorEl(null);
-  const handleDelete = async (id:string) => await deletePost(id);
-  const dialogTriggered =  (id:string) => {
-    triggeredId = id;
-    setDialogOpen(true)};
-  const close =  (value:boolean) =>{
-    if(value && triggeredId) handleDelete(triggeredId);
-    triggeredId = null;
-    setDialogOpen(false);
-    };
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  useEffect(() => {
-    getPosts()
+  const open = Boolean(anchorEl);
+  let triggeredId: string | null = null;
+
+  const get = () => getPosts()
       .then((res: Post[]) => setPosts(res))
       .finally(() => setIsLoading(false));
-  }, [handleDelete]);
+  
+      const handleClick = (event: MouseEvent<MouseEvent | HTMLButtonElement>) =>
+    setAnchorEl(event.currentTarget as Element);
+  
+  const handleClose = () => setAnchorEl(null);
+  
+  const handleDelete = async (id: string) => await deletePost(id);
+  
+  const dialogTriggered = (id: string) => {
+    triggeredId = id;
+    setDialogOpen(true);
+  };
+
+  const close = (value: boolean) => {
+    if (value && triggeredId) {
+      handleDelete(triggeredId);
+      get();
+    };
+    triggeredId = null;
+    setDialogOpen(false);
+  };
+
+  useEffect(() => {
+    get();
+  }, []);
 
   return (
     <div className="posts-wrapper place-self-center">
@@ -66,15 +83,18 @@ export default function Home() {
               avatar={<Avatar />}
               action={
                 <div>
-                  <IconButton aria-label="settings" onClick={(e)=>handleClick(e)}>
+                  <IconButton
+                    aria-label="settings"
+                    onClick={(e) => handleClick(e)}
+                  >
                     <MoreVertSharp />
                   </IconButton>
                   <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <MenuItem onClick={()=>handleDelete(res.id!)}>
+                    <MenuItem onClick={() => handleDelete(res.id!)}>
                       <Edit fontSize="small" style={{ marginRight: 8 }} />
                       Modifica
                     </MenuItem>
-                    <MenuItem onClick={()=>dialogTriggered(res.id!)}>
+                    <MenuItem onClick={() => dialogTriggered(res.id!)}>
                       <Delete fontSize="small" style={{ marginRight: 8 }} />
                       Elimina
                     </MenuItem>
@@ -109,7 +129,7 @@ export default function Home() {
           </Card>
         ))
       )}
-       <ConfirmationDialog
+      <ConfirmationDialog
         open={dialogOpen}
         close={close}
         title="Conferma eliminazione"

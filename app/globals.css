@@ -92,6 +92,15 @@ flex-direction:column;
   background-color: #040d34 !important;
 }
 
+.dark .MuiMenuItem-root {
+  background-color: #020617 !important;
+  color: #fff !important;
+}
+
+.dark .MuiMenuItem-root:hover {
+  background-color: #040d34 !important;
+}
+
 .MuiCard-root {
   background-color: transparent !important;
 }
