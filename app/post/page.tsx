@@ -9,7 +9,7 @@ import {
   Avatar,
   CircularProgress,
 } from "@mui/material";
-import { PhotoCamera, Save, Article, Boy } from "@mui/icons-material";
+import { PhotoCamera, Save, Article } from "@mui/icons-material";
 import { getPost, postPost, updatePost } from "@/client-services/post-service";
 import { Post as PostModel } from "../globals/models/models";
 import { upload } from "@/client-services/common";
@@ -22,7 +22,8 @@ export default function Post() {
   const [image, setImage] = useState<File | string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { settings, setSettings } = GetToastContext();
-  const params: URLSearchParams = new URLSearchParams(window.location.search);
+  const urlWithParams:string = document.location.search;
+  const params: URLSearchParams = new URLSearchParams(urlWithParams);
   const id = params.get("id");
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) setImage(event.target.files[0]);

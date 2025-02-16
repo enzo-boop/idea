@@ -97,17 +97,9 @@ flex-direction:column;
   color: #fff !important;
 }
 
-.dark .MuiList-root:hover {
-  background-color: #040d34 !important;
-}
-
-.dark .MuiDialog-root {
+.dark .MuiPaper-root {
   background-color: #020617 !important;
   color: #fff !important;
-}
-
-.dark .MuiDialog-root:hover {
-  background-color: #040d34 !important;
 }
 
 .MuiCard-root {
