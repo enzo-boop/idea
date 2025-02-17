@@ -1,8 +1,6 @@
 import { GetToastContext } from "@/app/contexts/toast.context";
 import { Close } from "@mui/icons-material";
 import { IconButton, Snackbar, SnackbarContent } from "@mui/material";
-import { useEffect } from "react";
-import { render } from "react-dom";
 
 const IdeaSnackbar: React.FC = () => {
   const { settings, setSettings } = GetToastContext();
