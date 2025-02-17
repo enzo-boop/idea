@@ -4,13 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import { ModeToggle } from "@/components/mode-toggle";
-import {
-  Add,
-  Lightbulb,
-} from "@mui/icons-material";
-import { GetToastContext, ToastProvider } from "./contexts/toast.context";
-import { useEffect } from "react";
-import { IconButton, Snackbar } from "@mui/material";
+import { Add, Lightbulb } from "@mui/icons-material";
+import { ToastProvider } from "./contexts/toast.context";
 import IdeaSnackbar from "@/components/snackbar.component";
 
 interface RootLayoutProps {
@@ -42,8 +37,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <nav className="ml-auto text-sm font-medium space-x-6">
                     <Link href="/">Home</Link>
                     <Link href="/about">About</Link>
-                    <Link href="/sign-in">Accedi</Link>
-                    <Link href="/post"><Add/></Link>
+                    <Link href="sign-in">Accedi</Link>
+                    <Link href="/post">
+                      <Add />
+                    </Link>
                   </nav>
                 </div>
               </header>

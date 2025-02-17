@@ -8,6 +8,7 @@ import {
   Container,
   Avatar,
   CircularProgress,
+  SnackbarProps,
 } from "@mui/material";
 import { PhotoCamera, Save, Article } from "@mui/icons-material";
 import { getPost, postPost, updatePost } from "@/client-services/post-service";
@@ -21,8 +22,8 @@ export default function Post() {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { settings, setSettings } = GetToastContext();
-  let id: string | null = null;
+  const [id, setId] = useState<string | null>(null);
+  const { setSettings } = GetToastContext();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) setImage(event.target.files[0]);
   };
@@ -53,9 +54,10 @@ export default function Post() {
           setSettings({
             open: true,
             autoHideDuration: 3000,
-            message: "Post " + id ? "modificato" : "creato" + "correttamente!",
-          });
-          window.location.href = "/";
+            message:
+              "Post " + (id ? "modificato" : "creato") + " correttamente!",
+          } as SnackbarProps);
+          location.href = "/";
         });
     }
   };
@@ -63,16 +65,20 @@ export default function Post() {
   useEffect(() => {
     const urlWithParams: string = location.search;
     const params: URLSearchParams = new URLSearchParams(urlWithParams);
-    id = params.get("id");
-    if (id) {
-      getPost(id).then((response) => {
+    setId(params.get("id"));
+  }, []);
+
+  useEffect(() => {
+    new Promise<void>(async (resolve) => {
+      if (id) {
+        const response = await getPost(id);
         setImage(response.imageUrl!);
         setText(response.content!);
         setTitle(response.title!);
-      });
-    }
-    setIsLoading(false);
-  }, []);
+      }
+      resolve();
+    }).finally(() => setIsLoading(false));
+  }, [id]);
 
   return (
     <Container

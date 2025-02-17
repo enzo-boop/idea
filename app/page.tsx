@@ -13,36 +13,22 @@ import {
   IconButton,
   Typography,
   CircularProgress,
-  Menu,
-  MenuItem,
 } from "@mui/material";
-import {
-  Delete,
-  Edit,
-  Favorite,
-  MoreVertSharp,
-  Share,
-} from "@mui/icons-material";
+import { Delete, Edit, Favorite, Share } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
 import { GetToastContext } from "./contexts/toast.context";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [triggeredId, setTriggeredId] = useState<string | null>(null);
-  const { settings, setSettings } = GetToastContext();
-  const open = Boolean(anchorEl);
+  const { setSettings } = GetToastContext();
+
   const get = () =>
     getPosts()
-      .then((res: Post[]) => setPosts(res))
+      .then((post: Post[]) => setPosts(post))
       .finally(() => setIsLoading(false));
-
-  const handleClick = (event: MouseEvent<MouseEvent | HTMLButtonElement>) =>
-    setAnchorEl(event.currentTarget as Element);
-
-  const handleClose = () => setAnchorEl(null);
 
   const handleDelete = async (id: string) =>
     deletePost(id).then(() => {
@@ -83,36 +69,30 @@ export default function Home() {
           Nessun post disponibile...
         </Typography>
       ) : (
-        posts.map((res, index) => (
+        posts.map((post, index) => (
           <Card key={index} sx={{ maxWidth: 560 }} className="mt-4">
             <CardHeader
               avatar={<Avatar />}
               action={
                 <div>
                   <IconButton
-                    aria-label="settings"
-                    onClick={(e) => handleClick(e)}
+                    color="primary"
+                    onClick={() => location.href = "/post?id=" + post.id}
                   >
-                    <MoreVertSharp />
+                    <Edit />
                   </IconButton>
-                  <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <MenuItem
-                      onClick={() => (location.href = "/post?id=" + res.id)}
-                    >
-                      <Edit fontSize="small" style={{ marginRight: 8 }} />
-                      Modifica
-                    </MenuItem>
-                    <MenuItem onClick={() => dialogTriggered(res.id!)}>
-                      <Delete fontSize="small" style={{ marginRight: 8 }} />
-                      Elimina
-                    </MenuItem>
-                  </Menu>
+                  <IconButton
+                    color="warning"
+                    onClick={() => dialogTriggered(post.id!)}
+                  >
+                    <Delete />
+                  </IconButton>
                 </div>
               }
-              title={res.title}
+              title={post.title}
               subheader={
-                res.createdAt
-                  ? new Date(res.createdAt).toLocaleDateString()
+                post.createdAt
+                  ? new Date(post.createdAt).toLocaleDateString()
                   : ""
               }
               classes={{
@@ -120,10 +100,10 @@ export default function Home() {
                 subheader: "dark:text-slate-500",
               }}
             />
-            <CardMedia component="img" height="194" image={res.imageUrl} />
+            <CardMedia component="img" height="194" image={post.imageUrl} />
             <CardContent>
               <Typography variant="body2" className="prose dark:prose-invert">
-                {res.content}
+                {post.content}
               </Typography>
             </CardContent>
             <CardActions disableSpacing className="justify-end">
