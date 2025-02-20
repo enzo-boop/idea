@@ -59,7 +59,7 @@ export default function Post() {
             message:
               "Post " + (id ? "modificato" : "creato") + " correttamente!",
           } as SnackbarProps);
-          location.href = "/";
+          if (typeof window !== "undefined") location.href = "/";
         });
     }
   };
@@ -82,7 +82,7 @@ export default function Post() {
     }).finally(() => setIsLoading(false));
   }, [id]);
 
-  if (!session?.user) location.href = "/";
+  if (!session?.user && typeof window !== "undefined" ) location.href = "/";
 
   return (
     <Container
