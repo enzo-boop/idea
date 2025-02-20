@@ -16,8 +16,10 @@ import { Post as PostModel } from "../globals/models/models";
 import { upload } from "@/client-services/common";
 import { GetToastContext } from "../contexts/toast.context";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Post() {
+  const { data: session, status } = useSession();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | string | null>(null);
@@ -79,6 +81,8 @@ export default function Post() {
       resolve();
     }).finally(() => setIsLoading(false));
   }, [id]);
+
+  if (!session?.user) location.href = "/";
 
   return (
     <Container

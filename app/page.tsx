@@ -1,6 +1,5 @@
 "use client";
-import { MouseEvent, useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Post } from "./globals/models/models";
 import { deletePost, getPosts } from "@/client-services/post-service";
 import {
@@ -17,14 +16,15 @@ import {
 import { Delete, Edit, Favorite, Share } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
 import { GetToastContext } from "./contexts/toast.context";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [triggeredId, setTriggeredId] = useState<string | null>(null);
   const { setSettings } = GetToastContext();
-
   const get = () =>
     getPosts()
       .then((post: Post[]) => setPosts(post))
@@ -72,22 +72,23 @@ export default function Home() {
         posts.map((post, index) => (
           <Card key={index} sx={{ maxWidth: 560 }} className="mt-4">
             <CardHeader
-              avatar={<Avatar />}
+              avatar={<Avatar src="sample_user.webp" />}
               action={
-                <div>
-                  <IconButton
-                    color="primary"
-                    onClick={() => location.href = "/post?id=" + post.id}
-                  >
-                    <Edit />
-                  </IconButton>
-                  <IconButton
-                    color="warning"
-                    onClick={() => dialogTriggered(post.id!)}
-                  >
-                    <Delete />
-                  </IconButton>
-                </div>
+                session?.user && (
+                  <div>
+                    <IconButton
+                      onClick={() => (location.href = "/post?id=" + post.id)}
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      color="error"
+                      onClick={() => dialogTriggered(post.id!)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </div>
+                )
               }
               title={post.title}
               subheader={
@@ -107,7 +108,7 @@ export default function Home() {
               </Typography>
             </CardContent>
             <CardActions disableSpacing className="justify-end">
-              <IconButton aria-label="add to favorites">
+              <IconButton aria-label="add to favorites" color="error">
                 <Favorite />
               </IconButton>
               <IconButton aria-label="share">

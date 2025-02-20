@@ -1,25 +1,44 @@
 import React from "react";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 
 interface ConfirmationDialogProps {
   open: boolean;
   title: string;
   text: string;
-  close: (value:boolean)=>void;
+  close: (value: boolean) => void;
 }
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ open, title, text ,close}) => {
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
+  open,
+  title,
+  text,
+  close,
+}) => {
   return (
     <Dialog open={open}>
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        {text}
-      </DialogContent>
+      <DialogContent>{text}</DialogContent>
       <DialogActions>
-        <Button onClick={()=>close(false)} color="secondary">
+        <Button
+          variant="contained"
+          component="label"
+          color="error"
+          onClick={() => close(false)}
+        >
           Annulla
         </Button>
-        <Button onClick={()=>close(true)} color="primary">
+        <Button
+          variant="contained"
+          component="label"
+          onClick={() => close(true)}
+          color="primary"
+        >
           Continua
         </Button>
       </DialogActions>
