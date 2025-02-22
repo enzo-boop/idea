@@ -2,7 +2,7 @@
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { DoorBack, Key } from "@mui/icons-material";
+import { DoorBack, Key, Lock } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -16,11 +16,15 @@ const SignIn = () => {
   const { data: session, status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passError, setPassError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    setError(null);
+    validate();
+    if (emailError || passError) return;
     const result = await signIn("credentials", {
       redirect: false,
       email,
@@ -28,9 +32,18 @@ const SignIn = () => {
     });
 
     if (result?.error) {
-      setError("Invalid credentials");
+      setError("Credenziali non valide!");
     } else {
       location.href = "/";
+    }
+  };
+
+  const validate = () => {
+    setEmailError(false);
+    setPassError(false);
+    if (!email || !password) {
+      if (!email) setEmailError(true);
+      if (!password) setPassError(true);
     }
   };
 
@@ -69,6 +82,8 @@ const SignIn = () => {
             required
             fullWidth
             margin="normal"
+            error={emailError}
+            helperText={emailError ? "Questo campo è obbligatorio" : ""}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
@@ -78,6 +93,8 @@ const SignIn = () => {
             required
             fullWidth
             margin="normal"
+            error={passError}
+            helperText={passError ? "Questo campo è obbligatorio" : ""}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Container
@@ -89,10 +106,10 @@ const SignIn = () => {
           >
             <Button
               variant="contained"
-              color="primary"
+              color={error?"error":"primary"}
               type="submit"
               onClick={(e) => handleSubmit(e)}
-              startIcon={<Key />}
+              startIcon={error?(<Lock/>):(<Key />)}
             >
               Accedi
             </Button>
