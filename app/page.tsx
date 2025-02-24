@@ -12,6 +12,7 @@ import {
   IconButton,
   Typography,
   Skeleton,
+  useMediaQuery,
 } from "@mui/material";
 import { Delete, Edit, Favorite, Share } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
@@ -21,6 +22,7 @@ import { useSession } from "next-auth/react";
 export default function Home() {
   const { data: session, status } = useSession();
   const [posts, setPosts] = useState<Post[]>([]);
+  const isMobile = useMediaQuery("(max-width: 560px)");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [triggeredId, setTriggeredId] = useState<string | null>(null);
@@ -51,6 +53,7 @@ export default function Home() {
     setDialogOpen(false);
   };
 
+
   useEffect(() => {
     get();
   }, []);
@@ -59,47 +62,47 @@ export default function Home() {
     <div className="posts-wrapper place-self-center">
       {isLoading ? (
         <div>
-          <div style={{ width: 560 }} className="mt-4">
+          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={220}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
           </div>
-          <div style={{ width: 560 }} className="mt-4">
+          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={220}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
           </div>
-          <div style={{ width: 560 }} className="mt-4">
+          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={220}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={560}
+              width={isMobile ? 330 : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />

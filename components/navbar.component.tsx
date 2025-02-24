@@ -42,6 +42,7 @@ const IdeaNavbar: React.FC = () => {
           {!session?.user && (
             <IconButton>
               <Link href="sign-in">
+              <DoorFrontOutlined/>
               </Link>
             </IconButton>
           )}
