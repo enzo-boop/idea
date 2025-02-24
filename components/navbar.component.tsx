@@ -1,7 +1,18 @@
-import { Add, Lightbulb } from "@mui/icons-material";
+import {
+  Add,
+  AddOutlined,
+  DoorBack,
+  DoorBackOutlined,
+  DoorFront,
+  DoorFrontOutlined,
+  Home,
+  InfoOutlined,
+  Lightbulb,
+} from "@mui/icons-material";
 import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { IconButton } from "@mui/material";
 
 const IdeaNavbar: React.FC = () => {
   const { data: session } = useSession();
@@ -12,23 +23,41 @@ const IdeaNavbar: React.FC = () => {
     <header>
       <div className="flex items-center justify-between">
         <ModeToggle />
-        <h1 className="font-medium ml-auto">
-          <Lightbulb />
+        <a
+          className="font-medium ml-auto"
+          href="/"
+          style={{ textDecoration: "none" }}
+        >
+          <Lightbulb
+            sx={{ color: "#ffd900", filter: "drop-shadow(0px 0px 1px black)" }}
+          />
           Idéa
-        </h1>
+        </a>
         <nav className="ml-auto text-sm font-medium space-x-6">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          {!session?.user && <Link href="sign-in">Accedi</Link>}
-          {session?.user && (
-            <Link href="/" onClick={handleLogout}>
-              Logout
+          <IconButton>
+            <Link href="/about">
+              <InfoOutlined />
             </Link>
+          </IconButton>
+          {!session?.user && (
+            <IconButton>
+              <Link href="sign-in">
+              </Link>
+            </IconButton>
           )}
           {session?.user && (
-            <Link href="/post">
-              <Add />
-            </Link>
+            <IconButton>
+              <Link href="/" onClick={handleLogout}>
+              <DoorBackOutlined />
+              </Link>
+            </IconButton>
+          )}
+          {session?.user && (
+            <IconButton>
+              <Link href="/post">
+                <AddOutlined />
+              </Link>
+            </IconButton>
           )}
         </nav>
       </div>

@@ -11,7 +11,7 @@ import {
   CardMedia,
   IconButton,
   Typography,
-  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { Delete, Edit, Favorite, Share } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
@@ -58,8 +58,52 @@ export default function Home() {
   return (
     <div className="posts-wrapper place-self-center">
       {isLoading ? (
-        <div className="flex justify-center items-center mt-4 spinner">
-          <CircularProgress />
+        <div>
+          <div style={{ width: 560 }} className="mt-4">
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={220}
+              sx={{ marginTop: 2 }}
+            />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={100}
+              sx={{ marginTop: 2 }}
+            />
+          </div>
+          <div style={{ width: 560 }} className="mt-4">
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={220}
+              sx={{ marginTop: 2 }}
+            />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={100}
+              sx={{ marginTop: 2 }}
+            />
+          </div>
+          <div style={{ width: 560 }} className="mt-4">
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={220}
+              sx={{ marginTop: 2 }}
+            />
+            <Skeleton
+              variant="rectangular"
+              width={560}
+              height={100}
+              sx={{ marginTop: 2 }}
+            />
+          </div>
         </div>
       ) : posts.length === 0 ? (
         <Typography
@@ -70,7 +114,11 @@ export default function Home() {
         </Typography>
       ) : (
         posts.map((post, index) => (
-          <Card key={index} sx={{ maxWidth: 560 }} className="mt-4">
+          <Card
+            key={index}
+            sx={{ maxWidth: 560, boxShadow: "none!important" }}
+            className="mt-4"
+          >
             <CardHeader
               avatar={<Avatar src="sample_user.webp" />}
               action={
