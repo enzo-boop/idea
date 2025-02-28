@@ -65,17 +65,17 @@ export default function Home() {
     >
       {isLoading ? (
         <div>
-          <div style={{ width: isMobile ? "100vh" : 560 }} className="mt-4">
+          <div style={{ width: isMobile ? "100vw" : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
@@ -84,13 +84,13 @@ export default function Home() {
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
@@ -99,13 +99,13 @@ export default function Home() {
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? "100vh" : 560}
+              width={isMobile ? "100vw" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
@@ -122,7 +122,7 @@ export default function Home() {
         posts.map((post, index) => (
           <Card
             key={index}
-            sx={{ width: isMobile ? "100vh" : 560, boxShadow: "none!important" }}
+            sx={{ width: isMobile ? "100vw" : 560, boxShadow: "none!important" }}
             className="mt-4"
           >
             <CardHeader
@@ -157,7 +157,7 @@ export default function Home() {
             />
             <CardMedia
               component="img"
-              sx={{ height: 360, width: isMobile ? 330 : 560 }}
+              sx={{ height: 360, width: isMobile ? "100vw"[] : 560 }}
               image={post.imageUrl}
             />
             <CardContent>
