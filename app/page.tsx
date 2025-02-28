@@ -13,6 +13,7 @@ import {
   Typography,
   Skeleton,
   useMediaQuery,
+  Container,
 } from "@mui/material";
 import { Delete, Edit, Favorite, Share } from "@mui/icons-material";
 import ConfirmationDialog from "@/components/dialog.component";
@@ -58,50 +59,53 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="posts-wrapper place-self-center">
+    <Container
+      className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
+      style={{padding:0}}
+    >
       {isLoading ? (
         <div>
-          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
+          <div style={{ width: isMobile ? "100vh" : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
           </div>
-          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
+          <div style={{ width: isMobile ? "100vh" : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={100}
               sx={{ marginTop: 2 }}
             />
           </div>
-          <div style={{ width: isMobile ? 330 : 560 }} className="mt-4">
+          <div style={{ width: isMobile ? "100vh" : 560 }} className="mt-4">
             <Skeleton variant="circular" width={40} height={40} />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
-              width={isMobile ? 330 : 560}
+              width={isMobile ? "100vh" : 560}
               height={360}
               sx={{ marginTop: 2 }}
             />
@@ -118,7 +122,7 @@ export default function Home() {
         posts.map((post, index) => (
           <Card
             key={index}
-            sx={{ width: isMobile ? 330 : 560, boxShadow: "none!important" }}
+            sx={{ width: isMobile ? "100vh" : 560, boxShadow: "none!important" }}
             className="mt-4"
           >
             <CardHeader
@@ -178,6 +182,6 @@ export default function Home() {
         title="Conferma eliminazione"
         text="Sei sicuro di voler eliminare questo post?"
       />
-    </div>
+    </Container>
   );
 }
