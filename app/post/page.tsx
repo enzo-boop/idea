@@ -29,6 +29,7 @@ export default function Post() {
   const [id, setId] = useState<string | null>(null);
   const { setSettings } = GetToastContext();
   const isMobile = useMediaQuery("(max-width: 560px)");
+  
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) setImage(event.target.files[0]);
   };
