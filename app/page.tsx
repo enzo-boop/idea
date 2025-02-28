@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <Container
       className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
-      style={{padding:0}}
+      style={{padding:0,display:"flex",justifyContent:"center"}}
     >
       {isLoading ? (
         <div>
