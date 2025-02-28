@@ -10,6 +10,7 @@ import {
   CircularProgress,
   SnackbarProps,
   CardMedia,
+  useMediaQuery,
 } from "@mui/material";
 import { PhotoCamera, Save, Article } from "@mui/icons-material";
 import { getPost, postPost, updatePost } from "@/client-services/post-service";
@@ -27,6 +28,7 @@ export default function Post() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [id, setId] = useState<string | null>(null);
   const { setSettings } = GetToastContext();
+  const isMobile = useMediaQuery("(max-width: 560px)");
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) setImage(event.target.files[0]);
   };
@@ -88,7 +90,7 @@ export default function Post() {
   return (
     <Container
       className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
-      style={{padding:0}}
+      style={{ padding: 0 }}
     >
       {isLoading ? (
         <div className="flex justify-center items-center mt-4 spinner">
@@ -113,7 +115,7 @@ export default function Post() {
             }}
           >
             <CardMedia
-              sx={{ width: 560, height: 360 }}
+              sx={{ width: isMobile ? "100vw" : 560, height: 360 }}
               image={
                 image
                   ? image instanceof File
