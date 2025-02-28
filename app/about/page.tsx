@@ -1,10 +1,12 @@
+import { InfoOutlined } from "@mui/icons-material";
+
 export default function About() {
   return (
     <div className="prose dark:prose-invert">
       <div className="mt-4">
         <h3>
-          <i className="fa fa-info mr-1"></i>
-          Chi siamo
+          <InfoOutlined />
+          Chi sono
         </h3>
         <p>
           Sono una persona che ha dedicato anni alla danza contemporanea,

@@ -53,7 +53,6 @@ export default function Home() {
     setDialogOpen(false);
   };
 
-
   useEffect(() => {
     get();
   }, []);
@@ -67,7 +66,7 @@ export default function Home() {
             <Skeleton
               variant="rectangular"
               width={isMobile ? 330 : 560}
-              height={220}
+              height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
@@ -82,7 +81,7 @@ export default function Home() {
             <Skeleton
               variant="rectangular"
               width={isMobile ? 330 : 560}
-              height={220}
+              height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
@@ -97,13 +96,13 @@ export default function Home() {
             <Skeleton
               variant="rectangular"
               width={isMobile ? 330 : 560}
-              height={220}
+              height={360}
               sx={{ marginTop: 2 }}
             />
             <Skeleton
               variant="rectangular"
               width={isMobile ? 330 : 560}
-              height={100}
+              height={360}
               sx={{ marginTop: 2 }}
             />
           </div>
@@ -119,11 +118,11 @@ export default function Home() {
         posts.map((post, index) => (
           <Card
             key={index}
-            sx={{ maxWidth: 560, boxShadow: "none!important" }}
+            sx={{ width: isMobile ? 330 : 560, boxShadow: "none!important" }}
             className="mt-4"
           >
             <CardHeader
-              avatar={<Avatar src="sample_user.webp" />}
+              avatar={<Avatar src="sample_user.svg" />}
               action={
                 session?.user && (
                   <div>
@@ -152,7 +151,11 @@ export default function Home() {
                 subheader: "dark:text-slate-500",
               }}
             />
-            <CardMedia component="img" height="194" image={post.imageUrl} />
+            <CardMedia
+              component="img"
+              sx={{ height: 360, width: isMobile ? 330 : 560 }}
+              image={post.imageUrl}
+            />
             <CardContent>
               <Typography variant="body2" className="prose dark:prose-invert">
                 {post.content}

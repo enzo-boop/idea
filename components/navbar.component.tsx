@@ -1,18 +1,14 @@
 import {
-  Add,
   AddOutlined,
-  DoorBack,
   DoorBackOutlined,
-  DoorFront,
   DoorFrontOutlined,
-  Home,
+  ExploreOutlined,
   InfoOutlined,
-  Lightbulb,
 } from "@mui/icons-material";
 import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 
 const IdeaNavbar: React.FC = () => {
   const { data: session } = useSession();
@@ -23,40 +19,45 @@ const IdeaNavbar: React.FC = () => {
     <header>
       <div className="flex items-center justify-between">
         <ModeToggle />
-        <a
-          className="font-medium ml-auto"
-          href="/"
-          style={{ textDecoration: "none" }}
-        >
-          <Lightbulb
-            sx={{ color: "#ffd900", filter: "drop-shadow(0px 0px 1px black)" }}
-          />
-          Idéa
-        </a>
         <nav className="ml-auto text-sm font-medium space-x-6">
           <IconButton>
+            <Link href="/">
+              <Tooltip title="Esplora" arrow>
+                <ExploreOutlined />
+              </Tooltip>
+            </Link>
+          </IconButton>
+          <IconButton>
             <Link href="/about">
-              <InfoOutlined />
+              <Tooltip title="Chi sono" arrow>
+                <InfoOutlined />
+              </Tooltip>
             </Link>
           </IconButton>
           {!session?.user && (
             <IconButton>
               <Link href="sign-in">
-              <DoorFrontOutlined/>
+                <Tooltip title="Accedi" arrow>
+                  <DoorFrontOutlined />
+                </Tooltip>
               </Link>
             </IconButton>
           )}
           {session?.user && (
             <IconButton>
               <Link href="/" onClick={handleLogout}>
-              <DoorBackOutlined />
+                <Tooltip title="Esci" arrow>
+                  <DoorBackOutlined />
+                </Tooltip>
               </Link>
             </IconButton>
           )}
           {session?.user && (
             <IconButton>
               <Link href="/post">
-                <AddOutlined />
+                <Tooltip title="Crea post" arrow>
+                  <AddOutlined />
+                </Tooltip>
               </Link>
             </IconButton>
           )}

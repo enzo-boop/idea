@@ -9,6 +9,7 @@ import {
   Avatar,
   CircularProgress,
   SnackbarProps,
+  CardMedia,
 } from "@mui/material";
 import { PhotoCamera, Save, Article } from "@mui/icons-material";
 import { getPost, postPost, updatePost } from "@/client-services/post-service";
@@ -82,105 +83,108 @@ export default function Post() {
     }).finally(() => setIsLoading(false));
   }, [id]);
 
-  if (!session?.user && typeof window !== "undefined" ) location.href = "/";
+  if (!session?.user && typeof window !== "undefined") location.href = "/";
 
   return (
     <Container
       className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
-      component="main"
+      style={{padding:0}}
     >
       {isLoading ? (
         <div className="flex justify-center items-center mt-4 spinner">
           <CircularProgress />
         </div>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: "20px",
-          }}
-        >
-          <Typography
-            variant="h5"
-            gutterBottom
+        <div>
+          <div className="prose dark:prose-invert">
+            <div className="mt-4">
+              <h3>
+                <Article />
+                {id ? "Modifica" : "Nuovo"} post
+              </h3>
+            </div>
+          </div>
+          <Box
             sx={{
-              marginTop: "20px",
-              marginBottom: "20px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
+              padding: "20px",
             }}
           >
-            <Article />
-            {id ? "Modifica" : "Nuovo"} post
-          </Typography>
-          {
-            <Avatar
-              src={
+            <CardMedia
+              sx={{ width: 560, height: 360 }}
+              image={
                 image
                   ? image instanceof File
                     ? URL.createObjectURL(image)
                     : image
                   : "alt-img.jpg"
               }
-              alt="Anteprima immagine"
-              sx={{ width: 300, height: 300, marginBottom: 2 }}
-            />
-          }
-          <Button
-            variant="contained"
-            component="label"
-            startIcon={<PhotoCamera />}
-          >
-            Carica
-            <input
-              type="file"
-              hidden
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </Button>
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            {/* Titolo */}
-            <TextField
-              label="Aggiungi titolo.."
-              variant="filled"
-              fullWidth
-              margin="normal"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            {/* Testo */}
-            <TextField
-              label="Aggiungi didascalia.."
-              variant="filled"
-              multiline
-              rows={4}
-              fullWidth
-              margin="normal"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
             />
             <Container
               sx={{
                 display: "flex",
                 justifyContent: "end",
                 padding: "0!important",
+                marginTop: "15px",
               }}
             >
               <Button
                 variant="contained"
-                color="success"
                 component="label"
-                onClick={(e) => handleSubmit(e)}
-                startIcon={<Save />}
+                startIcon={<PhotoCamera />}
               >
-                Salva
+                Carica
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
               </Button>
             </Container>
-          </form>
-        </Box>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              {/* Titolo */}
+              <TextField
+                label="Aggiungi titolo.."
+                variant="filled"
+                fullWidth
+                margin="normal"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              {/* Testo */}
+              <TextField
+                label="Aggiungi didascalia.."
+                variant="filled"
+                multiline
+                rows={4}
+                fullWidth
+                margin="normal"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <Container
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  padding: "0!important",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="success"
+                  component="label"
+                  onClick={(e) => handleSubmit(e)}
+                  startIcon={<Save />}
+                >
+                  Salva
+                </Button>
+              </Container>
+            </form>
+          </Box>
+        </div>
       )}
     </Container>
   );

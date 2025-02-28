@@ -52,7 +52,7 @@ const SignIn = () => {
   return (
     <Container
       className="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50"
-      component="main"
+      style={{padding:0}}
     >
       <Box
         sx={{
